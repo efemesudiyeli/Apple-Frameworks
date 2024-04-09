@@ -8,35 +8,44 @@
 import SwiftUI
 
 struct FrameworkDetailView: View {
+    var framework: Framework
+    @Binding var isShowingDetailView: Bool
+    
     var body: some View {
-       
-        
-        VStack(spacing: 50){
-            VStack{
-                Image(MockData.sampleFramework.imageName)
-                    .resizable()
-                    .frame(width: 120, height: 120)
-                Text(MockData.sampleFramework.name)
-                    .font(.title)
-                    .fontWeight(.semibold)
-            }
+        VStack{
             
-            Text(MockData.sampleFramework.description)
+            HStack{
+                
+                Spacer()
+                
+                Button(action: {
+                    isShowingDetailView = false
+                },
+                       label: {
+                    Image(systemName: "xmark")
+                        .foregroundStyle(Color(.label))
+                        .imageScale(.large)
+                        .frame(width: 44, height: 44)
+                })
+            }.padding(.trailing)
+            
+            Spacer()
+            
+            FrameworkTitleView(framework: framework)
+            
+            Text(framework.description)
+                .font(.body)
                 .padding()
             
+            Spacer()
+            
             Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                Text("Learn More")
-                    .frame(width: 300, height: 50)
-                    .background(Color.yellow)
-                    .clipShape(RoundedRectangle(cornerRadius: 10.0))
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
+                AFButton(title: "Learn More")
             })
         }
     }
 }
 
 #Preview {
-    FrameworkDetailView()
+    FrameworkDetailView(framework: MockData.sampleFramework, isShowingDetailView: .constant(false))
 }
